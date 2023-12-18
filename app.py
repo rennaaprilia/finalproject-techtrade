@@ -6,10 +6,24 @@ from bson import ObjectId
 from datetime import datetime
 import os
 
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+MONGODB_URI = os.environ.get("MONGODB_URI")
+DB_NAME =  os.environ.get("DB_NAME")
+
+client = PyMongo(MONGODB_URI)
+
+db = client[DB_NAME]
+
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = 'your_secret_key'  # Change this to a secure random key
-app.config['MONGO_URI'] = 'mongodb+srv://test:sparta@cluster0.zm8eqgi.mongodb.net/techtrade'
-app.config['MONGO_DBNAME'] = 'techtrade'
+# app.config['MONGO_URI'] = 'mongodb+srv://test:sparta@cluster0.zm8eqgi.mongodb.net/techtrade'
+# app.config['MONGO_DBNAME'] = 'techtrade'
 app.config['UPLOAD_FOLDER'] = 'static/uploaded_img'
 
 mongo = PyMongo(app)
