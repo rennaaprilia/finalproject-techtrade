@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrade</title>
+
+    <!-- font awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Logo Title -->
+    <link rel="icon" href="static/images/logo.png" type="png">
+
+</head>
+
+<body>
+    <!-- header section starts -->
+    <header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                icon: '{{ category }}',
+                title: 'Alert!',
+                text: '{{ message }}',
+            });
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <input type="checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+
+        <a href="#" class="logo">TechTrade<span>.</span></a>
+
+        <nav class="navbar">
+            <a href="{{ url_for('customerDashboard') }}">Home</a>
+            <a href="#about">About</a>
+            <a href="#product">Product</a>
+            <a href="#review">Review</a>
+            <a href="#contact">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+
+        <div class="icons">
+            <a href="{{ url_for('favorites') }}" class="fas fa-heart"></a>
+            <a href="{{ url_for('cart') }}" class="fas fa-shopping-cart"></a>
+
+            <!-- <a class="fas fa-user" id="dropbtn" onclick="myFunction()"></a>
+          <div class="dropdown-content" id="myDropdown">
+            <a href="{{ url_for('logout') }}">Logout</a>
+          </div> -->
+
+            <!-- <a class="p-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+                role="alert">
+                <span class="font-medium">Logged in</span>
+            </a> -->
+
+        </div>
+
+    </header>
+    <!-- header section ends -->
+
+    <!-- about section starts -->
+    <section class="about product" id="about">
+        <h1 class="heading"><span> Your </span> Carts</h1>
+        <div>
+            <section class="product" id="product" style="text-align: center; font-size: large">
+                <section class="product" id="product">
+                    <div class="box-container">
+                        {% for product in cart_items %}
+                        <div class="box">
+                            <div class="image">
+                                <img src="{{ url_for('static', filename=product.product_image_path) }}"
+                                    class="w-full h-full object-contain" alt="" />
+                                <form action="{{ url_for('update_to_cart', product_id=product.product_id) }}"
+                                    method="post">
+                                    <div class="icons">
+                                        <a href="{{ url_for('add_to_favorites', product_id=product.product_id) }}"
+                                            class="fas fa-heart"></a>
+                                        <input type="number" value="{{product.quantity}}" min="1" class="input-quantity"
+                                            name="total_quantity">
+                                        <button type="submit" class="cart-btn">Save</button>
+                                        <a href="#" class="fas fa-share"></a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="content">
+                                <h3>{{ product.product_name }}</h3>
+                                <div class="price">${{ product.price }}</div>
+                                <a href="{{ url_for('delete_to_cart', product_id=product.product_id) }}"
+                                    class="block mt-5 px-10 py-4 bg-red-600 text-xl hover:bg-red-700 text-white w-full rounded-md">Remove
+                                    Cart</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <section class="mx-10">
+
+                    <table class="w-full mt-8">
+                        <thead>
+                            <tr>
+                                <th class="text-left font-bold text-gray-700">Products</th>
+                                <th class="text-center font-bold text-gray-700">Quantity</th>
+                                <th class="text-right font-bold text-gray-700">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart_items %}
+                            <tr>
+                                <td class="text-left text-gray-700">{{ item.product_name }}</td>
+                                <td class="text-center text-gray-700">{{ item.quantity }}</td>
+                                <td class="text-right text-gray-700">${{ item.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="text-left font-bold text-gray-700">Total</td>
+                                <td class="text-center font-bold text-gray-700">{{total_quantity}}</td>
+                                <td class="text-right font-bold text-gray-700">${{ total_price }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </section>
+
+                <form method="post" action="{{ url_for('cart') }}" class="mt-20">
+                    <label for="payment_method">Payment Method:</label>
+                    <select name="payment_method" id="payment_method" required>
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit</option>
+                        <!-- Add more payment options as needed -->
+                    </select>
+                    <br />
+                    <button type="submit">Place Order</button>
+                </form>
+            </section>
+        </div>
+    </section>
+
+    </section>
+    <!-- about section ends -->
+
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function (e) {
+            if (!e.target.matches('#dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

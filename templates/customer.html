@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechTrade</title>
+
+    <!-- font awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+    <!-- Logo Title -->
+    <link rel="icon" href="static/images/logo.png" type="png">
+
+</head>
+
+<body>
+    <!-- header section starts -->
+    <header>
+        <input type="checkbox" name="" id="toggler" />
+        <label for="toggler" class="fas fa-bars"></label>
+
+        <a href="#" class="logo">TechTrade<span>.</span></a>
+
+        <nav class="navbar">
+            <a href="{{ url_for('customerDashboard') }}">Home</a>
+            <a href="#about">About</a>
+            <a href="#product">Product</a>
+            <a href="#review">Review</a>
+            <a href="#contact">Contact</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+
+        <div class="icons">
+            <a href="{{ url_for('favorites') }}" class="fas fa-heart"></a>
+            <a href="{{ url_for('cart') }}" class="fas fa-shopping-cart"></a>
+
+            <!-- <a class="fas fa-user" id="dropbtn" onclick="myFunction()"></a>
+        <div class="dropdown-content" id="myDropdown">
+          <a href="{{ url_for('logout') }}">Logout</a>
+        </div> -->
+
+            <!-- <a class="p-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+                role="alert">
+                <span class="font-medium">Logged in</span>
+            </a> -->
+
+        </div>
+
+        </div>
+    </header>
+    <!-- header section ends -->
+
+    <!-- home section starts -->
+    <section class="home" id="home">
+        <div class="content">
+            <h3>TechTrade Mobile</h3>
+            <span>Teknologi Terbaru dan Inovatif</span>
+            <p>
+                Selamat datang di TechTrade Mobile – Tempat terbaik untuk memenuhi
+                kebutuhan perangkat mobile dan laptop Anda! Kami bangga menjadi
+                destinasi utama untuk berbagai macam handphone, laptop, dan aksesoris
+                terkini dengan harga yang kompetitif.
+            </p>
+            <a href="#product" class="btn">Shop Now</a>
+        </div>
+    </section>
+    <!-- home section ends -->
+
+    <!-- about section starts -->
+    <section class="about" id="about">
+        <h1 class="heading"><span> About </span> Us</h1>
+        <div class="row">
+            <div class="video-container">
+                <video src="/static/images/about-vid.mp4" loop autoplay muted></video>
+                <h3>Best Selling Product</h3>
+            </div>
+            <div class="content">
+                <h3>Why Choose Us?</h3>
+                <p>
+                    Jaminan Kualitas: Produk-produk kami berasal dari merek terpercaya
+                    dengan standar kualitas tinggi. Kami hanya menyajikan yang terbaik
+                    untuk Anda.
+                </p>
+                <p>
+                    Harga Bersaing: Nikmati harga kompetitif dan penawaran spesial yang
+                    membuat belanja online Anda lebih hemat.
+                </p>
+                <p>
+                    Pengalaman Belanja Aman: Keamanan transaksi dan privasi pelanggan
+                    adalah prioritas utama kami. Belanja dengan percaya diri di
+                    TeckTrade Mobile.
+                </p>
+                <a href="#" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+    <!-- about section ends -->
+
+    <!-- icons section starts -->
+    <section class="icons-container">
+        <div class="icons">
+            <img src="/static/images/icon-1.png" alt="" />
+            <div class="info">
+                <h3>Free Delivery</h3>
+                <span>On All Orders</span>
+            </div>
+        </div>
+
+        <div class="icons">
+            <img src="/static/images/icon-2.png" alt="" />
+            <div class="info">
+                <h3>10 Days Returns</h3>
+                <span>Moneyback Guarantee</span>
+            </div>
+        </div>
+
+        <div class="icons">
+            <img src="/static/images/icon-3.png" alt="" />
+            <div class="info">
+                <h3>Offer & Gifts</h3>
+                <span>On All Orders</span>
+            </div>
+        </div>
+
+        <div class="icons">
+            <img src="/static/images/icon-4.png" alt="" />
+            <div class="info">
+                <h3>Cahback</h3>
+                <span>On Selected Products</span>
+            </div>
+        </div>
+    </section>
+    <!-- icons section ends -->
+
+    <!-- products section starts -->
+    <section class="product" id="product">
+        <h1 class="heading">Latest <span>Products</span></h1>
+        <div class="box-container">
+            {% for product in products %}
+            <div class="box">
+                <div class="image">
+                    <img src="{{ url_for('static', filename=product.product_image_path) }}"
+                        class="w-full h-full object-contain" alt="" />
+                    <div class="icons">
+                        <a href="{{ url_for('add_to_favorites', product_id=product._id) }}" class="fas fa-heart"></a>
+                        <a href="{{ url_for('add_to_cart', product_id=product._id) }}" class="fas fa-shopping-cart"></a>
+                        <!-- <input type="number" value="1" min="1" class="input-quantity" name="total_quantity">               -->
+                        <!-- <button type="submit" class="cart-btn">Add to Cart</button> -->
+                        <a href="#" class="fas fa-share"></a>
+                    </div>
+                </div>
+                <!-- <form action="{{ url_for('add_to_cart', product_id=product._id) }}" method="post">
+          </form> -->
+                <div class="content">
+                    <h3>{{ product.product_name }}</h3>
+                    <div class="price">${{ product.price }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    <!-- products section end -->
+
+    <!-- review section starts -->
+    <section class="review" id="review">
+        <h1 class="heading">Customer's <span>Review</span></h1>
+        <div class="box-container">
+            <div class="box">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+                    nisi praesentium debitis vitae fugit ut accusamus laborum tenetur,
+                    beatae ipsam omnis iure neque error, mollitia architecto? Voluptas
+                    qui pariatur magnam.
+                </p>
+                <div class="user">
+                    <img src="/static/images/pic-1.jpg" alt="" />
+                    <div class="user-info">
+                        <h3>Renna Aprilia</h3>
+                        <span>Happy Customer</span>
+                    </div>
+                </div>
+                <span class="fas fa-quote-right"></span>
+            </div>
+
+            <div class="box">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+                    nisi praesentium debitis vitae fugit ut accusamus laborum tenetur,
+                    beatae ipsam omnis iure neque error, mollitia architecto? Voluptas
+                    qui pariatur magnam.
+                </p>
+                <div class="user">
+                    <img src="/static/images/pic-2.jpg" alt="" />
+                    <div class="user-info">
+                        <h3>I Kadek Dody</h3>
+                        <span>Happy Customer</span>
+                    </div>
+                </div>
+                <span class="fas fa-quote-right"></span>
+            </div>
+
+            <div class="box">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+                    nisi praesentium debitis vitae fugit ut accusamus laborum tenetur,
+                    beatae ipsam omnis iure neque error, mollitia architecto? Voluptas
+                    qui pariatur magnam.
+                </p>
+                <div class="user">
+                    <img src="/static/images/pic-3.jpg" alt="" />
+                    <div class="user-info">
+                        <h3>Sartin</h3>
+                        <span>Happy Customer</span>
+                    </div>
+                </div>
+                <span class="fas fa-quote-right"></span>
+            </div>
+        </div>
+    </section>
+    <!-- review section starts -->
+
+    <!-- contact section starts -->
+
+    <section class="contact" id="contact">
+        <h1 class="heading"><span>Contact</span> Us</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                icon: '{{ category }}',
+                title: 'Alert!',
+                text: '{{ message }}',
+            });
+        </script>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <div class="row">
+            <!-- Update the form action to submit to the /contact route -->
+            <form action="{{ url_for('contact') }}" method="post">
+                <input type="text" name="name" placeholder="Name" class="box" required />
+                <input type="email" name="email" placeholder="Email" class="box" required />
+                <input type="tel" name="number" placeholder="Number" class="box" required />
+                <textarea name="message" class="box" placeholder="Message" cols="30" rows="10" required></textarea>
+                <input type="submit" value="Send message" class="btn" />
+            </form>
+
+            <div class="image">
+                <img src="/static/images/contact-img.png" alt="" />
+            </div>
+        </div>
+    </section>
+    <!-- contact section ends -->
+
+    <!-- footer section starts -->
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="{{ url_for('hello') }}">Home</a>
+                <a href="#about">About</a>
+                <a href="#product">Product</a>
+                <a href="#review">Review</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="box">
+                <h3>Extra Links</h3>
+                <a href="{{ url_for('favorites') }}">My Favorite</a>
+                <a href="{{ url_for('cart') }}">My Cart</a>
+            </div>
+
+            <div class="box">
+                <h3>Locations</h3>
+                <a href="#https://www.google.com/maps/">Jakarta</a>
+                <a href="#https://www.google.com/maps/">Surakarta</a>
+                <a href="#https://www.google.com/maps/">Depok</a>
+                <a href="#https://www.google.com/maps/">Bali</a>
+            </div>
+
+            <div class="box">
+                <h3>Contact Info</h3>
+                <a href="#https://wa.me/qr/6AEID6G4KEDLB1">WhatsApp <span> | 0811 1438 135 </span></a>
+                <a href="#mailto:admin@gmail.com">admin@gmail.com</a>
+                <a href="#https://maps.app.goo.gl/swqpwPxQKtDrY7rp8">Jebres, Surakarta - 57126</a>
+            </div>
+            <img src="/static/images/payment.jpg" alt="" />
+        </div>
+        <div class="credit">
+            Created by <span> Group 5 LearningX </span> | All Rights Reserved
+        </div>
+    </section>
+    <!-- footer section ends -->
+    <!-- footer section ends -->
+    <script>
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+        window.onclick = function (e) {
+            if (!e.target.matches('#dropbtn')) {
+                var myDropdown = document.getElementById("myDropdown");
+                if (myDropdown.classList.contains('show')) {
+                    myDropdown.classList.remove('show');
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

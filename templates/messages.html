@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechTrade</title>
+
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  
+  <!-- custom css file link -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- Logo Title -->
+  <link rel="icon" href="static/images/logo.png" type="png">
+
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      Messages<span style="color: var(--pink)"> Management </span>
+    </div>
+    <div class="icons"></div>
+
+    <nav class="navbar">
+      <a href="{{ url_for('adminDashboard') }}">Back</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <section class="product">
+    <!-- Product List Container -->
+    <div class="box-container">
+      <!-- Product Box 2 -->
+      <div class="box">
+        <table class="table-auto">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>No. HP</th>
+              <th>Pesan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for message in messages %}
+            {% if message.status == 'new' %}
+            <tr class="bg-blue-300">
+              <td class="py-1 px-3">{{ message.name }}</td>
+              <td class="py-1 px-3">{{ message.email }}</td>
+              <td class="py-1 px-3">{{ message.number }}</td>
+              <td class="py-1 px-3">{{ message.message }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td class="py-1 px-3">{{ message.name }}</td>
+              <td class="py-1 px-3">{{ message.email }}</td>
+              <td class="py-1 px-3">{{ message.number }}</td>
+              <td class="py-1 px-3">{{ message.message }}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add more product boxes as needed -->
+    </div>
+  </section>
+</body>
+
+</html>

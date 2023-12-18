@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechTrade</title>
+
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+  <!-- custom css file link -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- Logo Title -->
+  <link rel="icon" href="static/images/logo.png" type="png">
+  
+</head>
+
+<body>
+  <!-- Header Section -->
+  <header>
+    <div class="logo">
+      Product<span style="color: var(--pink)"> Management </span>
+    </div>
+    <div class="icons"></div>
+
+    <nav class="navbar">
+      <a href="{{ url_for('adminDashboard') }}">Back</a>
+    </nav>
+  </header>
+
+  <!-- Main Content Section -->
+  <section class="product">
+    <!-- Add new product form with file input -->
+    <form method="post" action="{{ url_for('products') }}" enctype="multipart/form-data">
+      <label for="product_name">Product Name:</label>
+      <input type="text" name="product_name" required />
+      <br />
+      <label for="product_image">Product Image:</label>
+      <input type="file" name="product_image" accept="image/*" required />
+      <br />
+      <label for="price">Price:</label>
+      <input type="number" name="price" required />
+      <br />
+      <label for="category">Category:</label>
+      <select name="category" required>
+        <option value="Laptop">Laptop</option>
+        <option value="Smartphone">Smartphone</option>
+      </select>
+      <br />
+      <button type="submit">Add Product</button>
+    </form>
+
+    <!-- Product List Container -->
+    <div class="box-container">
+      {% for product in products %}
+      <!-- Product Box -->
+      <div class="box">
+        <div class="image">
+          <img src="{{ url_for('static', filename=product.product_image_path) }}" alt="Product 1" />
+          <div class="icons">
+            <a href="{{ url_for('edit_product', product_id=product._id) }}" class="edit-btn"><i
+                class="fa fa-pencil"></i> Edit</a>
+            <a href="{{ url_for('delete_product', product_id=product._id) }}" class="delete-btn"
+              onclick="return confirm('Are you sure you want to delete this product?');"><i class="fa fa-trash"></i>
+              Delete</a>
+          </div>
+        </div>
+        <div class="content">
+          <h3>{{ product.product_name }}</h3>
+          <div class="price">${{ product.price }}</div>
+        </div>
+      </div>
+      {% endfor %}
+      <!-- Add more product boxes as needed -->
+    </div>
+  </section>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <!-- Include the Tailwind CSS CDN or link to your local Tailwind CSS file -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <!-- custom css file link -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <!-- font awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <!-- Logo Title -->
+    <link rel="icon" href="static/images/logo.png" type="png">
+
+</head>
+
+<header>
+    <input type="checkbox" name="" id="toggler" />
+    <label for="toggler" class="fas fa-bars"></label>
+
+    <a href="#" class="logo">TechTrade<span>.</span></a>
+
+    <nav class="navbar">
+        <a href="{{ url_for('hello') }}">Home</a>
+    </nav>
+</header>
+
+<body class="bg-gray-100 h-screen flex justify-center items-center home">
+    <div class="bg-pink-100 p-10 rounded-2xl shadow-md max-w-3xl w-full mx-8 relative">
+        <div class="absolute rounded-full left-1/2 -top-16">
+            <i class="fas fa-user text-7xl rounded-full py-8 px-9 -left-1/2 relative bg-pink-500 shadow-md text-white"
+                style="border: 2px solid white;"></i>
+        </div>
+        <h1 class="text-center text-3xl font-bold mt-14 mb-6">User Login</h1>
+        <form method="post" action="{{ url_for('login') }}" class="bg-white">
+            <div class="mb-4">
+                <label for="username" class="block text-lg text-gray-600">Username:</label>
+                <input type="text" name="username" class="w-full border rounded px-3 py-2" required>
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-lg text-gray-600">Password:</label>
+                <input type="password" name="password" class="w-full border rounded px-3 py-2" required>
+            </div>
+            <button type="submit"
+                class="bg-[#e84393] w-full text-xl font-bold text-white px-4 py-2 rounded hover:bg-pink-700">Login</button>
+            <small class="flex gap-1 justify-center pt-6 text-base">Don't have an account yet? <a
+                    href="{{ url_for('register') }}"
+                    class="text-blue-600 hover:text-blue-900 underline">Register</a></small>
+        </form>
+    </div>
+</body>
+
+</html>

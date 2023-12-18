@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <!-- Include Tailwind CSS from CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+
+    <!-- Logo Title -->
+    <link rel="icon" href="static/images/logo.png" type="png">
+
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="container mx-auto p-8 max-w-md">
+        <h1 class="text-2xl font-bold mb-6">Edit Product</h1>
+
+        <!-- Edit product form -->
+        <form method="post" action="{{ url_for('edit_product', product_id=product._id) }}"
+            enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="product_name" class="block text-sm font-medium text-gray-600">Product Name:</label>
+                <input type="text" name="product_name" value="{{ product.product_name }}"
+                    class="mt-1 p-2 w-full border rounded" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="product_image" class="block text-sm font-medium text-gray-600">Product Image:</label>
+                <input type="file" name="product_image" accept="image/*" class="mt-1 p-2 w-full border rounded">
+                {% if product.product_image_path %}
+                <img src="{{ url_for('static', filename=product.product_image_path) }}" alt="{{ product.product_name }}"
+                    class="mt-2 mb-2 max-w-full h-auto">
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <label for="price" class="block text-sm font-medium text-gray-600">Price:</label>
+                <input type="text" name="price" value="{{ product.price }}" class="mt-1 p-2 w-full border rounded"
+                    required>
+            </div>
+
+            <div class="mb-4">
+                <label for="category" class="block text-sm font-medium text-gray-600">Category:</label>
+                <select name="category" class="mt-1 p-2 w-full border rounded" required>
+                    <option value="Laptop" {{ 'selected' if product.category=='Laptop' }}>Laptop</option>
+                    <option value="Smartphone" {{ 'selected' if product.category=='Smartphone' }}>Smartphone</option>
+                </select>
+            </div>
+
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700">Update Product</button>
+        </form>
+
+        <!-- Link to go back to the product listing page -->
+        <a href="{{ url_for('products') }}" class="text-blue-500 mt-4 block">Back to Products</a>
+    </div>
+
+</body>
+
+</html>
